@@ -1,45 +1,102 @@
-.avatar img {
-    max-width: 100%;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
+/* Centers everything inside Home.jsx */
+.container {
+  display: flex;
+  justify-content: center; /* center horizontally */
+  align-items: center;     /* center vertically */
+  height: calc(100vh - 4rem); /* subtract nav height */
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Keep left and right divs next to each other */
+.main {
+  display: flex;
+  align-items: center;     /* vertically align inside row */
+  justify-content: center; /* centers both columns together */
+  gap: 2rem;               /* spacing between left and right */
+  width: 100%;
+  /* max-width: 1200px; */
+  box-sizing: border-box;
+}
+
+/* Left column */
 .left-div {
-    padding: 0;
+  flex: 2;                 /* take more space (e.g., 2/3 width) */
+  display: flex;
+  justify-content: center;
+}
+
+/* Right column */
+.right-div {
+  flex: 1;                 /* take less space (e.g., 1/3 width) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Avatar styling */
+.avatar img {
+  max-width: 100%;
+  display: block;
 }
 
 .avatar-div {
-    padding: 1rem 0 auto 0;
-    background-color: white;
-    border-radius: 24px;
-    overflow: hidden;
+  background-color: white;
+  border-radius: var(--radiusxl);
+  overflow: hidden;
 }
 
+/* Controls */
 .controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.welcome-message p{
-    margin-top: 5%;
-    font-weight: var(--semibold);
+.welcome-message p {
+  margin-top: 5%;
+  font-weight: var(--semibold);
+  text-align: center;
 }
 
 .mic-controls {
-    display: flex;
-    gap: 10px;
-    background-color: #F1F1EF;
-    padding: 0.5rem;
-    border-radius: 999px;
-    margin-bottom: 2%;
+  display: flex;
+  gap: 10px;
+  background-color: #F1F1EF;
+  padding: 0.5rem;
+  border-radius: 999px;
+  margin-bottom: 2%;
 }
 
 .mic-controls img {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.right-div {
-    display: flex;
+/* Ask AKIRA card */
+.cards p {
+  font-weight: var(--semibold);
+  font-size: var(--fontsize-lg);
+  text-align: center;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 768px) {
+  .main {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  .left-div,
+  .right-div {
+    flex: 1;
+    width: 100%;
+  }
 }

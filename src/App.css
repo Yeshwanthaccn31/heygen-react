@@ -1,5 +1,7 @@
 :root {
     --semibold: 600;
+    --radiusxl: 24px;
+    --fontsize-lg: 28px;
 }
 
 body {
