@@ -47,7 +47,7 @@ function Home() {
             console.log('Creating avatar session...');
             const session = await newAvatar.createStartAvatar({
                 quality: AvatarQuality.High,
-                avatarName: 'Wayne_20240711'
+                avatarName: 'Anna_public_3_20240108'
             });
             
             console.log('Avatar session created:', session);
@@ -146,21 +146,25 @@ function Home() {
             <div className="row main">
                 <div className="col-8 left-div">
                     <div className="avatar-div">
-                        <div className="avatar">
+                        <div className="avatar" style={{ aspectRatio: '16/9', width: '100%' }}>
                             <video 
                                 ref={videoRef}
                                 autoPlay 
                                 playsInline
                                 style={{
                                     width: '100%',
-                                    height: 'auto',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    objectPosition: 'center 5%',
                                     borderRadius: '8px'
                                 }}
                             />
                             {!isConnected && (
-                                <div className="loading-placeholder">
-                                    <p>{connectionStatus}</p>
-                                    <p style={{fontSize: '12px', color: '#999'}}>Debug: isConnected={isConnected.toString()}, avatar={avatarRef.current ? 'exists' : 'null'}</p>
+                                <div className="loading-placeholder" style={{ aspectRatio: '16/9', width: '100%' }}>
+                                    <div>
+                                        <p>{connectionStatus}</p>
+                                        <p style={{fontSize: '12px', color: '#999'}}>Debug: isConnected={isConnected.toString()}, avatar={avatarRef.current ? 'exists' : 'null'}</p>
+                                    </div>
                                 </div>
                             )}
                         </div>
