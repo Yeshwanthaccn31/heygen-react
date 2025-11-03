@@ -184,10 +184,16 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className="col-4 right-div">
+                <div className="col-4 right-div d-flex flex-column align-items-center justify-content-center">
                     <div className="cards">
                         <p>Ask AKIRA</p>
                     </div>
+                    <div className="d-flex flex-column align-items-center justify-content-center mt-2 mr-3 rounded p-1">
+                        <button className="btn btn-light mb-2">What is full form of AKIRA?</button>
+                        <button className="btn btn-light mb-2">What is full form of AKIRA?</button>
+                        <button className="btn btn-light">What is full form of AKIRA?</button>
+                    </div>
+
                 </div>
             </div>
         </div>
