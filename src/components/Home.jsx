@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import StreamingAvatar, { AvatarQuality, StreamingEvents } from '@heygen/streaming-avatar';
 import '../styles/home.css';
 import { mic } from '../assets';
 import { upload } from '../assets';
 
 function Home() {
+    const location = useLocation();
     const [isConnected, setIsConnected] = useState(false);
     const [isListening, setIsListening] = useState(false);
     const [connectionStatus, setConnectionStatus] = useState('Click to start AKIRA');
@@ -75,6 +77,13 @@ function Home() {
     };
 
     useEffect(() => {
+        if (location.state?.shouldInitialize && !userInteracted) {
+            setUserInteracted(true);
+            initializeAvatar();
+        }
+    }, [location.state]);
+
+    useEffect(() => {
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             recognition.current = new SpeechRecognition();
@@ -121,11 +130,11 @@ function Home() {
     };
 
     const handleMicClick = async () => {
-        if (!userInteracted) {
-            setUserInteracted(true);
-            await initializeAvatar();
-            return;
-        }
+        // if (!userInteracted) {
+        //     setUserInteracted(true);
+        //     await initializeAvatar();
+        //     return;
+        // }
         
         if (isListening) {
             recognition.current?.stop();

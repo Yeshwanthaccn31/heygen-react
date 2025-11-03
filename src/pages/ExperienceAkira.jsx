@@ -1,11 +1,33 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useRef } from 'react';
+import StreamingAvatar, { AvatarQuality, StreamingEvents } from '@heygen/streaming-avatar';
 import { avatar } from '../assets';
 
 function ExperienceAkira() {
     const navigate = useNavigate();
+    const [userInteracted, setUserInteracted] = useState(false);
+    const avatarRef = useRef(null);
+
+    const initializeAvatar = async () => {
+        try {
+            const newAvatar = new StreamingAvatar({
+                token: import.meta.env.VITE_HEYGEN_API_TOKEN
+            });
+
+            avatarRef.current = newAvatar;
+            
+            await newAvatar.createStartAvatar({
+                quality: AvatarQuality.High,
+                avatarName: 'Anna_public_3_20240108'
+            });
+            
+        } catch (error) {
+            console.error('Failed to initialize avatar:', error);
+        }
+    };
 
     const handleExperienceClick = () => {
-        navigate('/home');
+        navigate('/home', { state: { shouldInitialize: true } });
     };
 
     return (
