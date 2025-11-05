@@ -66,7 +66,7 @@ function Home() {
             });
             
             console.log('Avatar session created:', session);
-            
+
 
             
         } catch (error) {
@@ -153,6 +153,27 @@ function Home() {
         await handleSpeak(response);
     };
 
+    const handleQuestionClick = async (question) => {
+        if (!avatarRef.current) {
+            console.log('No avatar available');
+            return;
+        }
+        
+        let response;
+        if (openaiAssistant.current) {
+            try {
+                response = await openaiAssistant.current.getResponse(question);
+            } catch (error) {
+                console.error('Error getting OpenAI response:', error);
+                response = `I'll help you with that question: ${question}`;
+            }
+        } else {
+            response = `I'll help you with that question: ${question}`;
+        }
+        
+        await handleSpeak(response);
+    };
+
     const handleMicClick = async () => {
         // if (!userInteracted) {
         //     setUserInteracted(true);
@@ -226,9 +247,24 @@ function Home() {
                         <p>Ask AKIRA</p>
                     </div>
                     <div className="d-flex flex-column align-items-center justify-content-center mt-2 mr-3 rounded p-1">
-                        <button className="btn btn-light mb-2">What is full form of AKIRA?</button>
-                        <button className="btn btn-light mb-2">What is full form of AKIRA?</button>
-                        <button className="btn btn-light">What is full form of AKIRA?</button>
+                        <button 
+                            className="btn btn-light mb-2"
+                            onClick={() => handleQuestionClick('What is full form of AKIRA?')}
+                        >
+                            What is full form of AKIRA?
+                        </button>
+                        <button 
+                            className="btn btn-light mb-2"
+                            onClick={() => handleQuestionClick('What are your services AKIRA?')}
+                        >
+                            What are your services AKIRA?
+                        </button>
+                        <button 
+                            className="btn btn-light"
+                            onClick={() => handleQuestionClick('What is data analytics AKIRA?')}
+                        >
+                            What is data analytics AKIRA?
+                        </button>
                     </div>
 
                 </div>
