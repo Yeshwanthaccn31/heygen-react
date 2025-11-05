@@ -41,7 +41,7 @@ function ExperienceAkira() {
                             maxWidth: '100%', 
                             height: 'auto',
                             borderRadius: '8px'
-                        }} 
+                        }}         
                     />
                 </div>
                 <div className="col-6 d-flex flex-column align-items-center justify-content-center">

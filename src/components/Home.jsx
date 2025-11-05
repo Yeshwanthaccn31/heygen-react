@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import StreamingAvatar, { AvatarQuality, StreamingEvents } from '@heygen/streaming-avatar';
+import { OpenAIAssistant } from '../openai-assistant';
 import '../styles/home.css';
 import { mic } from '../assets';
 import { upload } from '../assets';
@@ -16,6 +17,7 @@ function Home() {
     const videoRef = useRef(null);
     const recognition = useRef(null);
     const reconnectAttempts = useRef(0);
+    const openaiAssistant = useRef(null);
 
     const initializeAvatar = async () => {
         setConnectionStatus('Connecting...');
@@ -45,6 +47,17 @@ function Home() {
 
             // Set avatar immediately after creating it
             avatarRef.current = newAvatar;
+            
+            // Initialize Azure OpenAI Assistant
+            const openaiApiKey = import.meta.env.VITE_OPENAI_API_KEY;
+            const azureEndpoint = import.meta.env.VITE_AZURE_OPENAI_ENDPOINT;
+            const apiVersion = import.meta.env.VITE_AZURE_OPENAI_API_VERSION;
+            const deploymentName = import.meta.env.VITE_AZURE_OPENAI_DEPLOYMENT_NAME;
+            
+            if (openaiApiKey && azureEndpoint) {
+                openaiAssistant.current = new OpenAIAssistant(openaiApiKey, azureEndpoint, apiVersion, deploymentName);
+                await openaiAssistant.current.initialize();
+            }
             
             console.log('Creating avatar session...');
             const session = await newAvatar.createStartAvatar({
@@ -125,7 +138,18 @@ function Home() {
             return;
         }
         
-        const response = `I heard you say: ${transcript}. How can I help you with that?`;
+        let response;
+        if (openaiAssistant.current) {
+            try {
+                response = await openaiAssistant.current.getResponse(transcript);
+            } catch (error) {
+                console.error('Error getting OpenAI response:', error);
+                response = `I heard you say: ${transcript}. How can I help you with that?`;
+            }
+        } else {
+            response = `I heard you say: ${transcript}. How can I help you with that?`;
+        }
+        
         await handleSpeak(response);
     };
 
